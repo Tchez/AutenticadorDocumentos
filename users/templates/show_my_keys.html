@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Minhas Chaves</title>
+</head>
+<body>
+    <h2>Suas chaves</h2>
+    {% if public_key %}
+        <pre>{{ public_key }}</pre>
+        <pre>{{ private_key }}</pre>
+    {% else %}
+        <p>Você não gerou um par de chaves ainda.</p>
+        <p><a href="/generate">Gerar par de chaves</a></p>
+    {% endif %}
+</body>
+</html>
