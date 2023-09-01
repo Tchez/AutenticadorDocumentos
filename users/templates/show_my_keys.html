@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>Minhas Chaves</title>
-</head>
-<body>
+  </head>
+  <body>
     <h2>Suas chaves</h2>
     {% if public_key %}
-        <pre>{{ public_key }}</pre>
-        <pre>{{ private_key }}</pre>
+    <pre>{{ public_key }}</pre>
+    <pre>{{ private_key }}</pre>
+    <p><a href="/">Voltar ao inicio</a></p>
     {% else %}
-        <p>Você não gerou um par de chaves ainda.</p>
-        <p><a href="/generate">Gerar par de chaves</a></p>
+    <p>Você não gerou um par de chaves ainda.</p>
+    <p><a href="/generate">Gerar par de chaves</a></p>
     {% endif %}
-</body>
+  </body>
 </html>

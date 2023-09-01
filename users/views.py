@@ -1,6 +1,19 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
+from django.views.generic.edit import CreateView
 from .crypto_utils import generate_keypair
+from .forms import UserRegisterForm
+
+
+def index(request):
+    return render(request, "index.html")
+
+
+class UserRegisterView(CreateView):
+    form_class = UserRegisterForm
+    template_name = "registration/register.html"
+    success_url = reverse_lazy("login")
 
 
 @login_required
