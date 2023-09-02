@@ -4,7 +4,6 @@
     <title>Home</title>
   </head>
   <body>
-    {% if user.is_authenticated %}
     <h1>Bem vindo ao Sistema de Assinatura Digital {{ user.username }}!</h1>
 
     <form action="{% url 'verify_hash' %}" method="POST">
@@ -16,8 +15,9 @@
       <input type="text" name="hash_code" id="hash_code" />
       <input type="submit" value="Verificar" />
     </form>
-
     <br />
+
+    {% if user.is_authenticated %}
     {% if user.public_key %}
     <a href="{% url 'show_my_keys' %}">Mostrar minhas chaves</a>
     <br />
@@ -30,12 +30,9 @@
     <br />
     <a href="{% url 'logout' %}">Sair</a>
     {% else %}
-    <h1>Bem vindo ao Sistema de Assinatura Digital!</h1>
-    <br />
     <a href="{% url 'login' %}">Faça login</a>
+    <br />
     <a href="{% url 'register' %}">Cadastre-se</a>
     {% endif %}
-    <br />
-    <a href="{% url 'verify_hash' %}">Verificar hash</a>
   </body>
 </html>

@@ -13,9 +13,6 @@ from users.crypto_utils import (
     sign_message,
     generate_hash,
     load_private_key_from_pem,
-    load_public_key_from_pem,
-    verify_signature,
-    verify_integrity,
 )
 from .forms import DocumentForm
 from .models import Document
@@ -119,5 +116,10 @@ class VerifyHashView(View):
         return render(
             request,
             "verify_hash.html",
-            {"document": document, "hash": hash, "is_valid_hash": is_valid_hash, "is_user_owner": is_user_owner},
+            {
+                "document": document,
+                "hash": hash,
+                "is_valid_hash": is_valid_hash,
+                "is_user_owner": is_user_owner,
+            },
         )

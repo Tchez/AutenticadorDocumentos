@@ -53,33 +53,6 @@ def generate_keypair_pem() -> tuple:
     return private_key_pem, public_key_pem
 
 
-def save_key_to_pem(key, filename: str) -> None:
-    """
-    Salva uma chave (privada ou pública) em um arquivo .pem.
-
-    Args:
-    - key: Chave para ser salva.
-    - filename (str): Nome do arquivo.
-    """
-    if isinstance(key, rsa.RSAPrivateKey):
-        with open(filename, "wb") as key_file:
-            key_file.write(
-                key.private_bytes(
-                    encoding=serialization.Encoding.PEM,
-                    format=serialization.PrivateFormat.PKCS8,
-                    encryption_algorithm=serialization.NoEncryption(),
-                )
-            )
-    elif isinstance(key, rsa.RSAPublicKey):
-        with open(filename, "wb") as key_file:
-            key_file.write(
-                key.public_bytes(
-                    encoding=serialization.Encoding.PEM,
-                    format=serialization.PublicFormat.SubjectPublicKeyInfo,
-                )
-            )
-
-
 def load_public_key_from_pem(pem_str) -> rsa.RSAPublicKey:
     """
     Carrega uma chave pública RSA de uma string PEM.
@@ -105,53 +78,9 @@ def load_private_key_from_pem(pem_str) -> rsa.RSAPrivateKey:
     - rsa.RSAPrivateKey: Chave privada RSA.
     """
     pem_bytes = _ensure_bytes(pem_str)
-    return serialization.load_pem_private_key(pem_bytes, password=None, backend=default_backend())
-
-
-def encrypt_message(message, public_key) -> bytes:
-    """
-    Criptografa uma mensagem usando uma chave pública RSA.
-
-    Args:
-    - message (str/bytes): Mensagem para ser criptografada.
-    - public_key: Chave pública RSA.
-
-    Retorna:
-    - bytes: Mensagem criptografada.
-    """
-    message_bytes = _ensure_bytes(message)
-
-    ciphertext = public_key.encrypt(
-        message_bytes,
-        padding.OAEP(
-            mgf=padding.MGF1(algorithm=hashes.SHA256()),
-            algorithm=hashes.SHA256(),
-            label=None,
-        ),
+    return serialization.load_pem_private_key(
+        pem_bytes, password=None, backend=default_backend()
     )
-    return ciphertext
-
-
-def decrypt_message(ciphertext: bytes, private_key) -> str:
-    """
-    Descriptografa uma mensagem usando uma chave privada RSA.
-
-    Args:
-    - ciphertext (bytes): Mensagem criptografada em bytes.
-    - private_key: Chave privada RSA.
-
-    Retorna:
-    - str: Mensagem descriptografada.
-    """
-    plaintext_bytes = private_key.decrypt(
-        ciphertext,
-        padding.OAEP(
-            mgf=padding.MGF1(algorithm=hashes.SHA256()),
-            algorithm=hashes.SHA256(),
-            label=None,
-        ),
-    )
-    return plaintext_bytes.decode("utf-8")
 
 
 def sign_message(message, private_key) -> bytes:
