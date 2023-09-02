@@ -1,0 +1,18 @@
+{% if is_valid_hash %}
+<h1>Hash válido</h1>
+
+{% if is_user_owner %}
+<h3>Usuário é dono do documento</h3>
+{% else %}
+<h3>Usuário não é dono do documento</h3>
+{% endif %}
+
+<h3>Hash: {{ hash }}</h3>
+<h3>Titulo do documento: {{ document.title }}</h3>
+<h3>Conteúdo: {{ document.content }}</h3>
+
+{% else %}
+<h1>Hash '{{hash}}' inválido</h1>
+{% endif %}
+
+<a href="{% url 'index' %}">Voltar</a>

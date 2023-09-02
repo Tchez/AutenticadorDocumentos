@@ -13,4 +13,5 @@ urlpatterns = [
     path(
         "verify/<int:pk>/", views.VerifySignatureView.as_view(), name="verify_document"
     ),
+    path("verify/hash/", views.VerifyHashView.as_view(), name="verify_hash"),
 ]

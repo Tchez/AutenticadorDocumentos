@@ -104,3 +104,20 @@ class VerifySignatureView(View):
             return redirect("list_documents")
 
 
+class VerifyHashView(View):
+    def get(self, request):
+        return render(request, "verify_hash.html")
+
+    def post(self, request):
+        hash = request.POST.get("hash_code")
+        user = request.user
+        document = Document.objects.filter(hash=hash).first()
+
+        is_valid_hash = True if document else False
+        is_user_owner = True if document.owner == user else False
+
+        return render(
+            request,
+            "verify_hash.html",
+            {"document": document, "hash": hash, "is_valid_hash": is_valid_hash, "is_user_owner": is_user_owner},
+        )

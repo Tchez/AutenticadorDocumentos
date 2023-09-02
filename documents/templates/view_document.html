@@ -6,7 +6,10 @@
 <p>{{ object.content }}</p>
 
 <h3>Assinatura</h3>
-<p>{{ object.signature }}</p>
+<p>{{ object.hex_signature }}</p>
+
+<h3>Hash</h3>
+<p>{{ object.hash }}</p>
 
 <a href="{% url 'list_documents' %}"> Voltar à lista de documentos </a>
 {% endblock %}

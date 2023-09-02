@@ -21,3 +21,8 @@ class Document(models.Model):
         concat = self.content + self.hash
         public_key = load_public_key_from_pem(self.owner.public_key)
         return verify_signature(concat, self.signature, public_key)
+
+    def hex_signature(self):
+        if self.signature is None:
+            return None
+        return self.signature.hex()

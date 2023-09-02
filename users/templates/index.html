@@ -7,8 +7,16 @@
     {% if user.is_authenticated %}
     <h1>Bem vindo ao Sistema de Assinatura Digital {{ user.username }}!</h1>
 
-    {% comment %} Input para verificar o hash e enviar {% endcomment %}
-    
+    <form action="{% url 'verify_hash' %}" method="POST">
+      {% csrf_token %}
+      <label for="hash_code"
+        >Digite o hash code para verificar se ele consta em algum
+        documento:</label
+      >
+      <input type="text" name="hash_code" id="hash_code" />
+      <input type="submit" value="Verificar" />
+    </form>
+
     <br />
     {% if user.public_key %}
     <a href="{% url 'show_my_keys' %}">Mostrar minhas chaves</a>
@@ -25,6 +33,9 @@
     <h1>Bem vindo ao Sistema de Assinatura Digital!</h1>
     <br />
     <a href="{% url 'login' %}">Faça login</a>
+    <a href="{% url 'register' %}">Cadastre-se</a>
     {% endif %}
+    <br />
+    <a href="{% url 'verify_hash' %}">Verificar hash</a>
   </body>
 </html>
