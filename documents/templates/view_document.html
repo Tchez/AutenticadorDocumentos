@@ -1,0 +1,12 @@
+{% block content %}
+<h3>Título:</h3>
+<p>{{ object.title }}</p>
+
+<h3>Conteúdo:</h3>
+<p>{{ object.content }}</p>
+
+<h3>Assinatura</h3>
+<p>{{ object.signature }}</p>
+
+<a href="{% url 'list_documents' %}"> Voltar à lista de documentos </a>
+{% endblock %}

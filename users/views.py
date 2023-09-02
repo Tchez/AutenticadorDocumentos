@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
-from .crypto_utils import generate_keypair
+from .crypto_utils import generate_keypair_pem
 from .forms import UserRegisterForm
 
 
@@ -19,7 +19,7 @@ class UserRegisterView(CreateView):
 @login_required
 def generate_keys(request):
     if request.method == "POST":
-        private_key, public_key = generate_keypair()
+        private_key, public_key = generate_keypair_pem()
         request.user.private_key = private_key
         request.user.public_key = public_key
         request.user.save()

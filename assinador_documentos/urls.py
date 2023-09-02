@@ -10,4 +10,5 @@ urlpatterns = [
     path("users/", include("users.urls")),
     path("accounts/logout/", LogoutView.as_view(next_page="index"), name="logout"),
     path("accounts/", include("django.contrib.auth.urls")),
+    path("documents/", include("documents.urls")),
 ]

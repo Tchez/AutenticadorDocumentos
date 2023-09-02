@@ -33,6 +33,26 @@ def generate_keypair() -> tuple:
     return private_key, public_key
 
 
+def generate_keypair_pem() -> tuple:
+    """
+    Gera um par de chaves RSA e retorna como (private_key_pem, public_key_pem).
+
+    Retorna:
+    - tuple: Chave privada e chave pública no formato PEM.
+    """
+    private_key, public_key = generate_keypair()
+    private_key_pem = private_key.private_bytes(
+        encoding=serialization.Encoding.PEM,
+        format=serialization.PrivateFormat.PKCS8,
+        encryption_algorithm=serialization.NoEncryption(),
+    )
+    public_key_pem = public_key.public_bytes(
+        encoding=serialization.Encoding.PEM,
+        format=serialization.PublicFormat.SubjectPublicKeyInfo,
+    )
+    return private_key_pem, public_key_pem
+
+
 def save_key_to_pem(key, filename: str) -> None:
     """
     Salva uma chave (privada ou pública) em um arquivo .pem.
@@ -72,6 +92,20 @@ def load_public_key_from_pem(pem_str) -> rsa.RSAPublicKey:
     """
     pem_bytes = _ensure_bytes(pem_str)
     return serialization.load_pem_public_key(pem_bytes, backend=default_backend())
+
+
+def load_private_key_from_pem(pem_str) -> rsa.RSAPrivateKey:
+    """
+    Carrega uma chave privada RSA de uma string PEM.
+
+    Args:
+    - pem_str (str): String no formato PEM da chave privada.
+
+    Retorna:
+    - rsa.RSAPrivateKey: Chave privada RSA.
+    """
+    pem_bytes = _ensure_bytes(pem_str)
+    return serialization.load_pem_private_key(pem_bytes, password=None, backend=default_backend())
 
 
 def encrypt_message(message, public_key) -> bytes:

@@ -1,0 +1,50 @@
+{% block content %}
+
+<h2>Seus documentos</h2>
+
+{% if not documents %}
+
+<p>Você não possui nenhum documento</p>
+<a href="{% url 'create_document' %}">Novo Documento</a>
+
+{% else %}
+
+<p>Você possui {{ documents|length }} documentos</p>
+
+<a href="{% url 'create_document' %}">Novo Documento</a>
+<br />
+<br />
+
+<table border="1">
+  <thead>
+    <tr>
+      <th>Titulo</th>
+      <th>Conteúdo</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for document in documents %}
+    <tr>
+      <td>{{ document.title }}</td>
+      <td>{{ document.content | truncatechars:40 }}</td>
+      <td>
+        <a href="{% url 'edit_document' document.id %}">Editar</a> |
+        <a href="{% url 'delete_document' document.id %}">Deletar</a> |
+        <a href="{% url 'view_document' document.id %}">Visualizar</a> | 
+        {% if document.signature %}
+        <a href="{% url 'verify_document' document.id %}">Verificar</a>
+        {% else %}
+        <a href="{% url 'sign_document' document.id %}">Assinar</a>
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+
+<br />
+
+<a href="{% url 'index' %}">Voltar</a>
+{% endblock %}

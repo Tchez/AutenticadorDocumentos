@@ -11,10 +11,12 @@
     <a href="{% url 'show_my_keys' %}">Mostrar minhas chaves</a>
     <br />
     {% else %}
-    <h2>Você ainda não possui uma chave pública</h2>
-    <a href="{% url 'generate_keys' %}">Criar chave</a>
+    <h2>Você não gerou um par de chaves ainda.</h2>
+    <a href="{% url 'generate_keys' %}">Gerar chave</a>
     <br />
     {% endif %}
+    <a href="{% url 'list_documents' %}">Listar documentos</a>
+    <br />
     <a href="{% url 'logout' %}">Sair</a>
     {% else %}
     <h1>Bem vindo ao Sistema de Assinatura Digital!</h1>

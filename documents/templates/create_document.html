@@ -1,0 +1,8 @@
+{% block content %}
+  <h2>Criar documento</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Salvar documento</button>
+  </form>
+{% endblock %}

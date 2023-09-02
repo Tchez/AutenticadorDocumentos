@@ -1,0 +1,8 @@
+{% block content %}
+<h2>Você tem certeza que deseja deletar este documento?</h2>
+<form method="post">
+  {% csrf_token %}
+  <button type="submit">Sim, deletar</button>
+  <a href="{% url 'list_documents' %}">Não, voltar</a>
+</form>
+{% endblock %}
