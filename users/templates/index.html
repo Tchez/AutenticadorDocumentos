@@ -6,6 +6,9 @@
   <body>
     {% if user.is_authenticated %}
     <h1>Bem vindo ao Sistema de Assinatura Digital {{ user.username }}!</h1>
+
+    {% comment %} Input para verificar o hash e enviar {% endcomment %}
+    
     <br />
     {% if user.public_key %}
     <a href="{% url 'show_my_keys' %}">Mostrar minhas chaves</a>

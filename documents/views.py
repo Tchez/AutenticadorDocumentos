@@ -1,5 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import (
@@ -79,7 +79,10 @@ class SignDocumentView(View):
         except Exception as e:
             print("Erro ao carregar a chave:", e)
 
-        new_signature = sign_message(document.content, private_key)
+        hash = generate_hash(document.content)
+        document.hash = hash
+        concat = document.content + hash
+        new_signature = sign_message(concat, private_key)
         document.signature = new_signature
         document.save()
         return redirect("list_documents")
@@ -87,13 +90,17 @@ class SignDocumentView(View):
 
 class VerifySignatureView(View):
     def get(self, request, pk):
-        document = get_object_or_404(Document, id=pk)
+        if pk:
+            document = get_object_or_404(Document, id=pk)
+            is_valid_signature = document.verify_signature()
 
-        is_valid_signature = document.verify_signature()
+            context = {
+                "document": document,
+                "is_valid_signature": is_valid_signature,
+            }
 
-        if is_valid_signature:
-            print("A assinatura é válida!")
+            return render(request, "verify_signature.html", context)
         else:
-            print("A assinatura é inválida!")
+            return redirect("list_documents")
 
-        return redirect("list_documents")
+

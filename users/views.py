@@ -30,11 +30,9 @@ def generate_keys(request):
 @login_required
 def show_my_keys(request):
     public_key = request.user.public_key
-    private_key = request.user.private_key
 
     context = {
         "public_key": public_key,
-        "private_key": private_key,
     }
 
     return render(request, "show_my_keys.html", context)
