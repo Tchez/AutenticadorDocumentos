@@ -54,3 +54,9 @@ O servidor estará disponível em:
 ```console
 http://127.0.0.1:8000/
 ```
+
+### Integrantes
+
++ Marco Antônio Martins
++ Edgard Morais Netto
++ Victor Tavares Moreira
