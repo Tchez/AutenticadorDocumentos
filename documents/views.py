@@ -72,20 +72,16 @@ class SignDocumentView(View):
     def get(self, request, pk):
         document = get_object_or_404(Document, id=pk)
 
-        private_key_pem = request.user.private_key
+        private_key_pem = document.owner.private_key
 
         try:
             private_key = load_private_key_from_pem(private_key_pem)
         except Exception as e:
             print("Erro ao carregar a chave:", e)
 
-        # private_key = load_private_key_from_pem(private_key_pem)
-
         new_signature = sign_message(document.content, private_key)
         document.signature = new_signature
-        document.signed_hash = generate_hash(document.content)
         document.save()
-
         return redirect("list_documents")
 
 
@@ -93,26 +89,11 @@ class VerifySignatureView(View):
     def get(self, request, pk):
         document = get_object_or_404(Document, id=pk)
 
-        public_key_pem = document.owner.public_key
+        is_valid_signature = document.verify_signature()
 
-        try:
-            public_key = load_public_key_from_pem(public_key_pem)
-        except Exception as e:
-            print("Erro ao carregar a chave:", e)
-
-        is_signature_valid = verify_signature(
-            document.content,
-            document.signature.encode("utf-8"),
-            public_key,
-        )
-
-        is_hash_valid = verify_integrity(document.content, document.signed_hash)
-
-        if is_signature_valid and is_hash_valid:
-            print("Documento e assinatura são válidos!")
-            # Aqui você pode redirecionar para uma página de sucesso ou atualizar o modelo TODO: Criar pagina para sucesso
+        if is_valid_signature:
+            print("A assinatura é válida!")
         else:
-            print("Documento ou assinatura são inválidos!")
-            # Aqui você pode redirecionar para uma página de erro ou atualizar o modelo
+            print("A assinatura é inválida!")
 
         return redirect("list_documents")

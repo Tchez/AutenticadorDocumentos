@@ -1,5 +1,6 @@
 from django.db import models
 from users.models import CustomUser
+from users.crypto_utils import verify_signature, load_public_key_from_pem
 
 
 class Document(models.Model):
@@ -8,7 +9,13 @@ class Document(models.Model):
     )
     title = models.CharField("Título", max_length=255)
     content = models.TextField("Conteúdo")
-    signature = models.TextField("Assinatura", null=True, blank=True)
-    signed_hash = models.CharField(
-        "Hash Assinado", max_length=64, null=True, blank=True
-    )
+    signature = models.BinaryField("Assinatura", null=True, blank=True)
+
+    def __str__(self):
+        return self.title
+
+    def verify_signature(self):
+        if self.signature is None:
+            return False
+        public_key = load_public_key_from_pem(self.owner.public_key)
+        return verify_signature(self.content, self.signature, public_key)
