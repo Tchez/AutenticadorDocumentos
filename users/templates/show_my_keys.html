@@ -2,15 +2,16 @@
 <html>
   <head>
     <title>Minhas Chaves</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   </head>
   <body>
     <h2>Chave pública</h2>
     {% if public_key %}
     <pre>{{ public_key }}</pre>
-    <p><a href="/">Voltar ao inicio</a></p>
+    <p><a href="/" class="btn btn-primary">Voltar ao inicio</a></p>
     {% else %}
     <p>Você não gerou um par de chaves ainda.</p>
-    <p><a href="/generate">Gerar par de chaves</a></p>
+    <p><a href="/generate" class="btn btn-primary">Gerar par de chaves</a></p>
     {% endif %}
   </body>
 </html>

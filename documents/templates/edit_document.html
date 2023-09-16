@@ -1,7 +1,14 @@
-{% block content %}
-<h2>Editar Documento</h2>
-<form method="post">
-  {% csrf_token %} {{ form.as_p }}
-  <button type="submit">Salvar alterações</button>
-</form>
-{% endblock %}
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    {% block content %}
+      <h2>Editar Documento</h2>
+      <form method="post">
+        {% csrf_token %} {{ form.as_p }}
+        <button type="submit">Salvar alterações</button>
+      </form>
+    {% endblock %}
+  </body>
+</html>

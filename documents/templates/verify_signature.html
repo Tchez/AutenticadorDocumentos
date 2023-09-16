@@ -1,8 +1,15 @@
-{% if is_valid_signature %}
-<p>Documento válido</p>
-hash: {{ document.hash }} {% else %}
-<p>Documento inválido</p>
-{% endif %}
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    {% if is_valid_signature %}
+      <p>Documento válido</p>hash: {{ document.hash }}
+    {% else %}
+      <p>Documento inválido</p>
+    {% endif %}
 
-<br />
-<a href="{% url 'list_documents' %}">Voltar</a>
+    <br />
+    <a href="{% url 'list_documents' %}">Voltar</a>
+  </body>
+</html>

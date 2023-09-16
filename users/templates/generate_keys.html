@@ -2,12 +2,22 @@
 <html>
   <head>
     <title>Gerar chaves</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
   </head>
   <body>
-    <h2>Gerar chaves</h2>
-    <form method="post">
-      {% csrf_token %}
-      <button type="submit">Gerar chaves</button>
-    </form>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">Chave Pública</a>
+      <form method="post" class="ml-auto">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary">Gerar chaves</button>
+      </form>
+    </nav>
+    <div class="container mt-5">
+      <h2>Chave Pública Gerada</h2>
+      <div class="form-group">
+        <label for="publicKey">Chave Pública:</label>
+        <input type="text" class="form-control" id="publicKey" readonly />
+      </div>
+    </div>
   </body>
 </html>
