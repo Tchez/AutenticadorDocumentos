@@ -4,19 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-KyZXEAg3QhqLMpG8r+Jnujsl5/2P+xZj2eeqsbzSphOJ2Lz1bcF5BdJ3qG5Xp0vP" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"></script> 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+        /* CSS personalizado para a barra de navegação (navbar) */
+        .custom-navbar {
+            background-color: #343a40; /* Cinza escuro */
+        }
+
+        /* CSS personalizado para o corpo do site */
+        body {
+            background-color: #f8f9fa; /* Cinza claro */
+            margin: 0; /* Remove margens padrão do corpo */
+        }
+        
+        /* CSS para afastar o campo do formulário da frase */
+        .form-field {
+            margin-top: 10px; /* Ajuste a margem superior conforme necessário */
+        }
+    </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
         <div class="container-md">
             <a class="navbar-brand" href="#">Sistema de Assinatura Digital</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto">
+                <ul class="navbar-nav">
                     {% if user.is_authenticated %}
                         {% if user.public_key %}
                             <li class="nav-item">
@@ -31,7 +46,7 @@
                             <a class="nav-link" href="{% url 'list_documents' %}">Listar documentos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'logout' %}">Sair</a>
+                            <a class="nav-link btn btn-danger" href="{% url 'logout' %}">Sair</a>
                         </li>
                     {% else %}
                         <li class="nav-item">
@@ -46,15 +61,21 @@
         </div>
     </nav>
 
-    <div class="container-md mt-4">
+    <div class="container-md mt-4 text-center"> <!-- Centralize o conteúdo -->
         <h1>Bem-vindo ao Sistema de Assinatura Digital {{ user.username }}!</h1>
+        <br> <!-- Quebra de linha abaixo da frase -->
         <form action="{% url 'verify_hash' %}" method="POST">
             {% csrf_token %}
-            <label for="hash_code">Digite o hash code para verificar se ele consta em algum documento:</label>
-            <input type="text" name="hash_code" id="hash_code" />
-            <input type="submit" value="Verificar" class="btn btn-primary" />
+            <div class="form-group mx-auto" style="width: 300px;"> <!-- Largura fixa e centralizada -->
+                <label for="hash_code">Digite o hash code para verificar se ele consta em algum documento:</label>
+                <input type="text" name="hash_code" id="hash_code" class="form-control form-field" />
+                <br><br> <!-- Duas quebras de linha para separar o campo do botão -->
+                <input type="submit" value="Verificar" class="btn btn-primary" />
+            </div>
         </form>
     </div>
-    
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-KyZXEAg3QhqLMpG8r+Jnujsl5/2P+xZj2eeqsbzSphOJ2Lz1bcF5BdJ3qG5Xp0vP" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"></script>
 </body>
 </html>

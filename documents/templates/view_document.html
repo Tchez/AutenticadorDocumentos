@@ -1,23 +1,39 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="UTF-8" />
-  </head>
-  <body>
-    {% block content %}
-      <h3>Título:</h3>
-      <p>{{ object.title }}</p>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+        /* CSS personalizado para limitar a largura do conteúdo */
+        .content-container {
+            max-width: 100%; /* Largura máxima igual à largura do monitor */
+            overflow-x: hidden; /* Oculta barras de rolagem horizontais se o conteúdo exceder a largura */
+        }
 
-      <h3>Conteúdo:</h3>
-      <p>{{ object.content }}</p>
+        /* CSS personalizado para a assinatura */
+        .signature {
+            white-space: pre-line; /* Mantém quebras de linha */
+            word-wrap: break-word; /* Permite que palavras se quebrem em várias linhas */
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid content-container">
+        {% block content %}
+        <h3 class="mb-3">Título:</h3>
+        <p>{{ object.title }}</p>
 
-      <h3>Assinatura</h3>
-      <p>{{ object.hex_signature }}</p>
+        <h3 class="mb-3">Conteúdo:</h3>
+        <p>{{ object.content }}</p>
 
-      <h3>Hash</h3>
-      <p>{{ object.hash }}</p>
+        <h3 class="mb-3">Assinatura:</h3>
+        <p class="signature">{{ object.hex_signature }}</p>
 
-      <a href="{% url 'list_documents' %}">Voltar à lista de documentos</a>
-    {% endblock %}
-  </body>
+        <h3 class="mb-3">Hash:</h3>
+        <p>{{ object.hash }}</p>
+
+        <a href="{% url 'list_documents' %}" class="btn btn-primary mt-3">Voltar à lista de documentos</a>
+        {% endblock %}
+    </div>
+</body>
 </html>
