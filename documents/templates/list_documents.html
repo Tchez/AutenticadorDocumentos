@@ -11,11 +11,11 @@
 
     {% if not documents %}
     <p>Você não possui nenhum documento</p>
-    <a href="{% url 'create_document' %}" class="btn btn-success">Novo Documento</a>
+    <a href="{% url 'create_document' %}" class="btn btn-outline-dark">Novo Documento</a>
     {% else %}
     <p>Você possui {{ documents|length }} documentos</p>
 
-    <a href="{% url 'create_document' %}" class="btn btn-primary mb-3">Novo Documento</a>
+    <a href="{% url 'create_document' %}" class="btn btn-outline-dark mb-3">Novo Documento</a>
 
     <div class="table-responsive">
         <table class="table table-bordered">
@@ -36,15 +36,16 @@
                 <td>{{ document.verify_signature }}</td>
                 <td>{{ document.hash|truncatechars:20 }}</td>
                 <td>
-                    <a href="{% url 'edit_document' document.id %}" class="btn btn-primary btn-sm">Editar</a>
-                    <a href="{% url 'delete_document' document.id %}" class="btn btn-danger btn-sm">Deletar</a>
-                    <a href="{% url 'view_document' document.id %}" class="btn btn-info btn-sm">Visualizar</a>
-
+                    <a href="{% url 'edit_document' document.id %}" class="btn btn-light btn-sm">Editar</a>
+                    <a href="{% url 'view_document' document.id %}" class="btn btn-light btn-sm">Visualizar</a>
+                    
                     {% if document.signature %}
-                    <a href="{% url 'verify_document' document.id %}" class="btn btn-success btn-sm">Verificar</a>
+                    <a href="{% url 'verify_document' document.id %}" class="btn btn-light btn-sm">Verificar</a>
                     {% else %}
-                    <a href="{% url 'sign_document' document.id %}" class="btn btn-warning btn-sm">Assinar</a>
+                    <a href="{% url 'sign_document' document.id %}" class="btn btn-light btn-sm">Assinar</a>
                     {% endif %}
+
+                    <a href="{% url 'delete_document' document.id %}" class="btn btn-danger btn-sm">Deletar</a>
                 </td>
             </tr>
             {% endfor %}
@@ -55,7 +56,7 @@
 
     <br />
 
-    <a href="{% url 'index' %}" class="btn btn-warning">Voltar</a>
+    <a href="{% url 'index' %}" class="btn btn-outline-dark">Voltar</a>
     {% endblock %}
 </div>
 </body>
