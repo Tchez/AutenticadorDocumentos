@@ -111,7 +111,9 @@ class VerifyHashView(View):
         document = Document.objects.filter(hash=hash).first()
 
         is_valid_hash = True if document else False
-        is_user_owner = True if document.owner == user else False
+        if is_valid_hash and document.owner == user:
+            is_user_owner = True
+        is_user_owner = False
 
         return render(
             request,
